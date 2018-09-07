@@ -5,6 +5,7 @@ jobs:
       - image: rust:1.28-slim-stretch
     steps:
       - checkout
+
       - run: cargo --version
       - run: cargo build --release
       - run: mkdir dist
@@ -18,16 +19,19 @@ jobs:
     docker:
       - image: docker:18.06
     steps:
+      - checkout
+
       - attach_workspace:
           at: target
+      - run: du -h target/release
 
-      - run: ls target/release
+      - setup_remote_docker:
+          version: 18.06.0-ce
 
-      # - checkout
-      # - setup_remote_docker:
-      #     version: 18.06.0-ce
-      # - run: docker --version
-      # - run: docker build .
+      - run: mv target/release/tmp-rs .
+      - run: docker --version
+      - run: docker build -t tmp-rs .
+      - run: docker run --rm -t tmp-rs
 
 workflows:
   version: 2
