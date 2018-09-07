@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run: cargo --version
-      - run: cargo build
+      - run: cargo build --release
       - run: mkdir dist
 
       - persist_to_workspace:
