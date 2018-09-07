@@ -2,15 +2,38 @@ version: 2
 jobs:
   build:
     docker:
-      # - image: rust:1.28-slim-stretch
-      - image: docker:18.06
+      - image: rust:1.28-slim-stretch
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 18.06.0-ce
-      - run: docker --version
-      - run: docker build .
+      - run: cargo --version
+      - run: cargo build
+      - run: mkdir dist
 
-      # - run: cargo --version
+      - persist_to_workspace:
+          root: target
+          paths:
+            - release/tmp-rs
+
+  pack:
+    docker:
+      - image: docker:18.06
+    steps:
+      - attach_workspace:
+          at: target
+
+      - run: ls target/release
+
       # - checkout
-      # - run: cargo build
+      # - setup_remote_docker:
+      #     version: 18.06.0-ce
+      # - run: docker --version
+      # - run: docker build .
+
+workflows:
+  version: 2
+  build-pack:
+    jobs:
+      - build
+      - pack:
+          requires:
+            - build
