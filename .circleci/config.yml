@@ -2,8 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rust:1.28-slim-stretch
+      # - image: rust:1.28-slim-stretch
+      - image: docker:18.06
     steps:
-      - run: cargo --version
       - checkout
-      - run: cargo build
+      - run: docker --version
+      - run: docker build .
+
+      # - run: cargo --version
+      # - checkout
+      # - run: cargo build
