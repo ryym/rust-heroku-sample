@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: rust:1.28-slim-stretch
+    steps:
+      - run: cargo --version
+      - checkout
+      - run: cargo build
