@@ -63,8 +63,8 @@ jobs:
       # HEROKU_API_KEY must be set.
       - run: heroku --version
       - run: heroku container:login
-      - run: heroku container:push web -a shink
-      - run: heroku container:release web -a shink
+      - run: heroku container:push web -a rust-sample
+      - run: heroku container:release web -a rust-sample
 
 workflows:
   version: 2
