@@ -13,7 +13,7 @@ jobs:
       - persist_to_workspace:
           root: target
           paths:
-            - release/tmp-rs
+            - release/sample
 
   release:
     docker:
@@ -30,7 +30,7 @@ jobs:
       - run: docker --version
       - run: docker info
 
-      - run: mv target/release/tmp-rs .
+      - run: mv target/release/sample .
 
       # HEROKU_API_KEY must be set.
       - run: heroku --version
