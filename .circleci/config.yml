@@ -3,6 +3,8 @@ jobs:
   test:
     docker:
       - image: rust:1.28-stretch
+        environment:
+          CARGO_HOME: /cargo
     steps:
       - checkout
       - run: cargo --version
@@ -15,11 +17,13 @@ jobs:
       - save_cache:
           key: cargo-install
           paths:
-            - "~/.cargo"
+            - "/cargo"
             - "./target"
   build:
     docker:
       - image: rust:1.28-stretch
+        environment:
+          CARGO_HOME: /cargo
     steps:
       - checkout
 
@@ -35,7 +39,7 @@ jobs:
       - save_cache:
           key: cargo-install
           paths:
-            - "~/.cargo"
+            - "/cargo"
             - "./target"
 
       - persist_to_workspace:
