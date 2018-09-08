@@ -15,9 +15,9 @@ jobs:
           paths:
             - release/tmp-rs
 
-  pack:
+  release:
     docker:
-      - image: docker:18.06
+      - image: ryym/heroku-docker
     steps:
       - checkout
 
@@ -27,32 +27,22 @@ jobs:
 
       - setup_remote_docker:
           version: 18.06.0-ce
-
-      - run: mv target/release/tmp-rs .
-      - run: docker --version
-      - run: docker build -t tmp-rs .
-      - run: docker run --rm -t tmp-rs
-
-  test:
-    docker:
-      - image: ryym/heroku-docker
-    steps:
-      - setup_remote_docker:
-          version: 18.06.0-ce
-
       - run: docker --version
       - run: docker info
+
+      - run: mv target/release/tmp-rs .
+
+      # HEROKU_API_KEY must be set.
+      - run: heroku --version
+      - run: heroku container:push web -a shink
+      - run: heroku container:release web -a shink
 
 workflows:
   version: 2
 
-  tmp:
+  build-pack:
     jobs:
-      - test
-
-  # build-pack:
-  #   jobs:
-  #     - build
-  #     - pack:
-  #         requires:
-  #           - build
+      - build
+      - release:
+          requires:
+            - build
