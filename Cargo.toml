@@ -1,6 +1,8 @@
 [package]
+authors = ["ryym <ryym.64@gmail.com>"]
 name = "sample"
 version = "0.1.0"
-authors = ["ryym <ryym.64@gmail.com>"]
 
 [dependencies]
+actix-web = "0.7.5"
+env_logger = "0.5.13"
