@@ -11,6 +11,8 @@ jobs:
 
       - restore_cache:
           key: cargo-{{checksum "Cargo.lock"}}
+      - restore_cache:
+          key: target-debug-{{checksum "Cargo.lock"}}
 
       - run: cargo test
 
@@ -18,7 +20,11 @@ jobs:
           key: cargo-{{checksum "Cargo.lock"}}
           paths:
             - "/cargo"
+      - save_cache:
+          key: target-debug-{{checksum "Cargo.lock"}}
+          paths:
             - "./target"
+
   build:
     docker:
       - image: rust:1.28-stretch
@@ -31,6 +37,8 @@ jobs:
 
       - restore_cache:
           key: cargo-{{checksum "Cargo.lock"}}
+      - restore_cache:
+          key: target-release-{{checksum "Cargo.lock"}}
 
       - run: cargo build --release
 
@@ -40,6 +48,9 @@ jobs:
           key: cargo-{{checksum "Cargo.lock"}}
           paths:
             - "/cargo"
+      - save_cache:
+          key: target-release-{{checksum "Cargo.lock"}}
+          paths:
             - "./target"
 
       - persist_to_workspace:
