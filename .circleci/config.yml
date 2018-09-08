@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: rust:1.28-slim-stretch
+      - image: rust:1.28-stretch
     steps:
       - checkout
       - run: cargo --version
@@ -19,7 +19,7 @@ jobs:
             - "./target"
   build:
     docker:
-      - image: rust:1.28-slim-stretch
+      - image: rust:1.28-stretch
     steps:
       - checkout
 
