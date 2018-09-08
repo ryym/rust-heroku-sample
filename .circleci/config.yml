@@ -71,7 +71,11 @@ workflows:
 
   test:
     jobs:
-      - test
+      - test:
+          filters:
+            branches:
+              ignore:
+                - release
 
   build-release:
     jobs:
