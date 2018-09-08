@@ -9,7 +9,7 @@ use std::{env, error::Error};
 
 fn greet(req: &HttpRequest) -> impl Responder {
     let to = req.match_info().get("name").unwrap_or("World");
-    format!("Hello {}!", to)
+    format!("Hello {}!!", to)
 }
 
 fn main() -> Result<(), Box<Error>> {
