@@ -6,8 +6,17 @@ jobs:
     steps:
       - checkout
       - run: cargo --version
+
+      - restore_cache:
+          key: cargo-install
+
       - run: cargo test
 
+      - save_cache:
+          key: cargo-install
+          paths:
+            - "~/.cargo"
+            - "./target"
   build:
     docker:
       - image: rust:1.28-slim-stretch
@@ -15,8 +24,19 @@ jobs:
       - checkout
 
       - run: cargo --version
+
+      - restore_cache:
+          key: cargo-install
+
       - run: cargo build --release
+
       - run: mkdir dist
+
+      - save_cache:
+          key: cargo-install
+          paths:
+            - "~/.cargo"
+            - "./target"
 
       - persist_to_workspace:
           root: target
