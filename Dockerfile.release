@@ -1,0 +1,5 @@
+FROM clux/diesel-cli
+
+ADD migrations /migrations
+
+CMD ["diesel", "migration", "run"]

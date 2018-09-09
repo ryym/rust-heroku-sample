@@ -78,7 +78,7 @@ jobs:
       # HEROKU_API_KEY must be set.
       - run: heroku --version
       - run: heroku container:login
-      - run: heroku container:push web -a rust-sample
+      - run: heroku container:push -a rust-sample --recursive
       - run: heroku container:release web -a rust-sample
 
 workflows:
