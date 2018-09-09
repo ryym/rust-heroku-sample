@@ -1,5 +1,9 @@
 FROM clux/diesel-cli
 
-ADD migrations /migrations
+WORKDIR /app
+
+COPY Cargo.toml Cargo.lock /app/
+COPY src /app/src
+COPY migrations /app/migrations
 
 CMD ["diesel", "migration", "run"]
