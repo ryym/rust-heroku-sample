@@ -79,7 +79,11 @@ jobs:
       - run: heroku --version
       - run: heroku container:login
       - run: heroku container:push -a rust-sample --recursive
-      - run: heroku container:release web -a rust-sample
+
+      # Though the doc says there is no need to specify a release image,
+      # Heroku does not run the release phase task without this.
+      # https://devcenter.heroku.com/articles/container-registry-and-runtime#release-phase
+      - run: heroku container:release release web -a rust-sample
 
 workflows:
   version: 2
